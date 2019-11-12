@@ -15,6 +15,7 @@ Vue.use(vueWechatTitle)
 //use支持传入一个函数,自动在函数内部写入Vue构建函数
 Vue.use(coreConfig);//fn(){}
 
+
 // Vue.use((Vue)=>{
 //   // console.log("run11111")
 //   console.dir(Vue);

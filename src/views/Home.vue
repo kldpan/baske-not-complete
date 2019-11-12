@@ -1,48 +1,29 @@
 <template>
   <div class="home">
-    <div>
-      <div v-show="true">login</div>
-      <span v-for="(item,index)  in pathList" :key="index">
-        <button @click="toPath(item)">{{item.pathname}}</button>
-      </span>
-    </div>
+
     <!-- 切换路由组件 -->
      <keep-alive>
-          <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title" img-set="/img/favicon.ico" />
+          <router-view v-if="$route.meta.keepAlive" v-wechat-title="$route.meta.title"/>
     </keep-alive>  
-          <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title" img-set="/img/favicon.ico" />
-    <div>{{testRoute}}</div>
+          <router-view v-if="!$route.meta.keepAlive" v-wechat-title="$route.meta.title"/>
+          <!-- img-set="/img/favicon.ico" -->
+
+    <!-- 底部导航 -->
+    <!-- 1.将底部导航组件放在components内layout中(tabbar.vue)，并写入模板以及逻辑，在Home.vue中引入该组件，并将节点放在模板中,最后将组件导出。
+    2.在common的index.js中引入mint-ui内的tabbar，并将其注册到全局组件 -->
+    <tabbar />
+    
   </div>
 </template>
 
 <script>
+
+import tabbar from "@/components/layout/tabbar.vue";
+
 export default {
-  data() {
-    return {
-      pathList: [
-        { pathname: "index", path: "/index" },
-        { pathname: "list", path: "/list" },
-        { pathname: "login", path: "/login" },
-        { pathname: "testv", path: "/testv" },
-      ]
-    };
-  },
-  mounted() {
-    // this.$eventBus.$on("testEvent", res => {
-    //   console.log(res);
-    // });
-    // console.log(this.$route);
-    this.$store.dispatch("getTestData");
-  },
-  computed: {
-    testRoute() {
-      return this.$route.meta;
-    }
-  },
-  methods: {
-    toPath(item) {
-      this.$router.push(item.path);
-    }
+  components:{
+    tabbar
   }
-};
+}
 </script>
+

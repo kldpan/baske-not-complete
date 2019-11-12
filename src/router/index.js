@@ -14,8 +14,7 @@ const routes = [
         name: "index",
         component: () => import("@/components/index.vue"),
         meta: {
-          title: "首页",
-          uname:"Msea",
+          title: "首页"
         }
       },
       {
@@ -23,52 +22,36 @@ const routes = [
         name:"list",
         component: () => import("@/components/list.vue"),
         meta: {
-          title: "列表页",
-        }
-      },
-      //动态路由
-      {
-        path: "list/:num",
-        name:"list",
-        component: () => import("@/components/two.vue"),
-        meta: {
-          title: "列表页",
+          title: "分类页",
         }
       },
       {
-        path: "login",
-        name:"login",
-        component: () => import("@/components/login.vue"),
+        path: "show",
+        name:"show",
+        component: () => import("@/components/show.vue"),
         meta: {
-          title: "登陆页"
+          title: "详情页",
         }
       },
       {
-        path: "testv",
-        name:"testv",
-        component: () => import("@/components/testv.vue"),
+        path: "cart",
+        name:"cart",
+        component: () => import("@/components/cart.vue"),
         meta: {
-          title: "Vuex测试"
+          title: "购物车"
+        }
+      },
+      {
+        path: "user",
+        name:"user",
+        component: () => import("@/components/user.vue"),
+        meta: {
+          title: "用户"
         }
       }
-    ]
+    ],
+    redirect: "/index"
   }
-  // {
-  //   path: "/user",  
-  //   name: "user",
-  //   component: () => import("@/views/user.vue"),
-  //   children: [
-  //     { path: "index", component: () => import("@/components/login.vue") }// /user/logn
-  //   ]
-  // },
-  // {
-  //   path: "/admin",  
-  //   name: "admin",
-  //   component: () => import("@/views/admin.vue"),
-  //   children: [
-  //     { path: "index", component: () => import("@/components/login.vue") }// /admin/logn
-  //   ]
-  // }
 ];
 const router = new VueRouter({
   // mode:"history",
@@ -95,10 +78,18 @@ router.beforeEach((to, from, next) => {
       next({
         path: "/list"
       });
-    } else if (params.userType === "test") {
+    } else if (params.userType === "show") {
       next({
-        path: "/test"
+        path: "/show"
       });
+    } else if (params.userType === "cart"){
+      next({
+        path: "/cart"
+      })
+    } else if (params.userType === "user"){
+      next({
+        path: "/user"
+      })
     }else{
       next();
     }

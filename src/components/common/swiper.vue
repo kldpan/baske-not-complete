@@ -4,8 +4,10 @@
       <!-- <div class="swiper-slide">Slide 1</div> -->
       <slot></slot>
     </div>
+      <div class="swiper-pagination"></div>
   </div>
 </template>
+
 
 <script>
 import Swiper from "swiper";
@@ -19,9 +21,8 @@ export default {
   }
 };
 </script>
+
+
 <style lang="scss">
-.swiper-container{
-  height:200px;
-  border:1px solid red;
-}
+
 </style>

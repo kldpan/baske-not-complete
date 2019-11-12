@@ -1,9 +1,13 @@
 import axios from "axios";
 
+// 下面是做一个生产环境和开发环境都能访问做的兼容，如果匹配到.com,则是生产环境（打包上线环境），匹配一个空串''替代apis，如果没.com,则是开发环境，此时需要匹配一个'/apis'
 
+// var baseURL = localhost.host.indexOf(".com") !== -1 ? "" : "/apis";           //开发环境
+
+var baseURL = "http://m.bestcake.com";         //生产环境
 
 var instance = axios.create({
-  baseURL: "",
+  baseURL,
   timeout: 10000,
   transformRequest: [
     function(data) {

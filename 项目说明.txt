@@ -1,0 +1,2 @@
+开发环境下apis.js内的poxy用的是apis，而该apis是在vue.config.js中配置代理时将apis代理为目标主机，http的baseURL用的是空串
+上线前将apis.js内的poxy改为空串，并将http.js中的baseURL改为目标主机host

@@ -4,6 +4,8 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
+// http://m.bestcake.com/json1811.ashx?v=1572839103341&c=NewIndexController&m=index
+
 module.exports = {
   publicPath: "./",
   devServer: {
@@ -11,7 +13,7 @@ module.exports = {
     port: 8899,
     proxy: {
       "/apis": {
-        target: "https://cnodejs.org",
+        target: "http://m.bestcake.com",
         changeOrigin: true,
         pathRewrite: {
           "^/apis": ""
