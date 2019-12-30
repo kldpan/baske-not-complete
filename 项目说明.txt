@@ -1,2 +1,53 @@
-����������apis.js�ڵ�poxy�õ���apis������apis����vue.config.js�����ô���ʱ��apis����ΪĿ��������http��baseURL�õ��ǿմ�
-����ǰ��apis.js�ڵ�poxy��Ϊ�մ�������http.js�е�baseURL��ΪĿ������host
+1.开发环境下apis.js内的poxy用的是apis，该apis是在vue.config.js中配置代理时将apis代理为目标主机，http.js的baseURL不用声明，直接在axious.create({baseURL:"",timeout:10000…})
+上线前要将apis.js内的poxy改为空串，并将http.js中的baseURL先声明为代理主机apis地址（即var baseURL="http://m.bestcake.com";），并在axious.create({baseURL, timeout:10000…})
+（注意：若仍然出现白屏或者数据取不回来的情况，则在vue.config.js中配置publicPath: "./"）
+
+
+2.vue组件中要使用bootstrap，需要做如下配置
+在vue.config.js中配置：
+resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'assets': path.resolve(__dirname, '../src/assets'),  
+      'jquery': "jquery/src/jquery" 
+    }
+ }
+下载bootstrap资源包，并将css中bootstrap.min.css和js中的bootstrap.min.js文件对应放在src下的assets的css和js文件中，并将整个fonts文件移入assets中
+在main.js中引入bootstrap的css和js文件
+import '@/assets/css/bootstrap.min.css' ;
+import '@/assets/js/bootstrap.min.js' ;
+此时即可在组件中的任何位置直接添加bootstrap类使用bootstrap
+
+3.全局指令注册及调用和局部指令注册及调用
+
+全局指令注册及调用：
+在core中建一个全局指令模块directive.js，在模块内注册全局自定义指令，一般用于操作DOM，在全局任意组件中v-指令名调用即可（如<div v-globalDirectives>全局指令注册</div>）
+export default (Vue)=>{
+	// console.log(Vue);
+	Vue.directive("globalDirectives",(el,binding,vnode)=>{
+		el.onclick=function(){
+			alert("OK");
+			el是当前节点（绑定该指令的当前节点及全部子节点）
+			binding是该自定义指令
+			vnode是绑定该指令的节点的全部状态
+			此时可通过el对当前节点进行dom操作
+		}
+	})
+}
+
+局部指令注册及调用：
+在需要注册的组件中添加指令option即可
+data:{},
+directives:{
+	localInstructions:{
+      		inserted:function(el,binding,vnode){
+			el是当前节点（绑定该指令的当前节点及全部子节点）
+			binding是该自定义指令
+			vnode是绑定该指令的节点的全部状态
+			此时可通过el对当前节点进行dom操作
+		}
+	}
+},
+mounted(){}
